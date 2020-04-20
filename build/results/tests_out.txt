@@ -1,13 +1,7 @@
-Breakpoint 1 at 0x426: file source/main.c, line 148.
+Breakpoint 1 at 0x352: file source/main.c, line 128.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"Unlock unsuccesfully"...
-	Expected 0x00 
-	PORTB '0x800025:	0x01
-"Unlock succesfully"..."Lock at beginning"..."(Lock) => PINA: 0x80 => PORTB: 0x00"..."PINA: 0x04, 0x00, 0x01 => PORTB: 0x00"...
-	Expected 0x00 
-	PORTB '0x800025:	0x01
-======================================================
+"Unlock unsuccesfully"..."Unlock succesfully"..."Lock at beginning"..."(Lock) => PINA: 0x80 => PORTB: 0x00"..."PINA: 0x04, 0x00, 0x01 => PORTB: 0x00"...======================================================
 Quitting: Remote doesn't know how to detach

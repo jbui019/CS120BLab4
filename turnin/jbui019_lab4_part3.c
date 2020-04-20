@@ -23,6 +23,7 @@ void tick(){
 		case init:
 			if(PINA == 0x80){
 				state = lock;
+				PORTB = 0x00;
 			}
 			else if(PINA == 0x04){
 				state = A2P;
@@ -72,6 +73,7 @@ void tick(){
 			break;
 
 		case A1P:
+			PORTB = 0x01;
 			if(PINA == 0x00){
 				state = A1R;
 			}

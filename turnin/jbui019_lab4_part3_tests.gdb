@@ -64,7 +64,7 @@ expectPORTB 0x00
 checkResult
 
 test "(Lock) => PINA: 0x80 => PORTB: 0x00"
-set state = lock
+set state = start
 setPINA 0x80
 continue 2
 expectPORTB 0x00
@@ -77,6 +77,8 @@ continue 2
 setPINA 0x00
 continue 2
 setPINA 0x01
+continue 2
+setPINA 0x00
 continue 2
 expectPORTB 0x00
 checkResult

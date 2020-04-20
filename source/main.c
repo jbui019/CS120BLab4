@@ -10,11 +10,9 @@
 #include <avr/io.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
-enum States{start, init, lock, pound, check, standby, pause, unlock}state;
-
+enum States{start,init ,  A2P, A2R, WP, A1P, A1R, lock}state;
 #endif
-unsigned char array[3] = {0x01, 0x02, 0x01};
-unsigned char i = 0;
+
 
 void tick(){
 	switch(state){//transitions
@@ -25,9 +23,10 @@ void tick(){
 		case init:
 			if(PINA == 0x80){
 				state = lock;
+				PORTB = 0x00;
 			}
 			else if(PINA == 0x04){
-				state = pound;
+				state = A2P;
 			}
 			else{
 				state = init;
@@ -43,51 +42,48 @@ void tick(){
 			}
 			break;
 
-		case pound:
+		case A2P:
 			if(PINA == 0x00){
-				state = check;
+				state = A2R;
 			}
 			else{
-				state = pound;
+				state = A2P;
 			}
 			
 			break;
 
-		case check:
-			if(PINA == array[i] ){
-				state = standby;
+		case A2R:
+			if(PINA == 0x02){
+				state = A1P;
 			}
-			else if(i == 0x04){
-				state = unlock;
-			}
-			else if(PINA == 0x08){
-				state = lock;
-			}
-			else if(PINA = 0x00){
-				state = check;
-			}
-			else if(PINA != array[i]){
-				PORTB = 0x01;
-                                state = pause;
-                        }	
-			break;
-		case standby:
-			if(PINA = 0x00){
-				++i;
-				state = check;
+			else if(PINA == 0x00){
+				state = A2R;
 			}
 			else{
-				state = pause;
-			}
+				state = WP;
+			}	
 			break;
-		case pause:
-			if(PINA = 0x00){
-				state = check;
-			}
-			else{
+		case WP:
+			if(PINA == 0x00){
 				state = init;
 			}
-		case unlock:
+			else{
+				state = WP;
+			}
+			break;
+
+		case A1P:
+			PORTB = 0x01;
+			if(PINA == 0x00){
+				state = A1R;
+			}
+			else{
+				state = A1P;
+			}
+			
+			break;
+
+		case A1R:
 			state = init;
 			break;
 
@@ -103,36 +99,23 @@ void tick(){
 			PORTB = 0x00;
 			break;
 		case init:
-			i = 0;
-			PORTC = 0x01;
 			break;
-		case standby:
-			PORTC = 0x04;
-			PORTD = i;
 		case lock:
 			PORTB = 0x00;
 			break;
-		case unlock:
-			if(PORTB == 0x01){
-				PORTB = 0x00;
-			}
-			else{
-				PORTB = 0x01;
-			}
-			break;
-		case pound:
-			PORTC = 0x02;
-			PORTD = i;
+
+		case A2P:
 			break;
 
-		case check:
-			PORTC = 0x03;
-			PORTD = i;
+		case A2R:
 			break;
 	
-		case pause:
+		case A1P:
+			PORTB = 0x01;
 			break;
-		}
+		case A1R:
+			break;
+	}
 
 }
 
@@ -140,8 +123,6 @@ int main(void) {
     /* Insert DDR and PORT initializations */
 	DDRA = 0x00; PORTA = 0xFF;
 	DDRB = 0xFF; PORTB = 0x00;
-	DDRD = 0xFF; PORTD = 0x00;
-	DDRC = 0xFF; PORTC = 0x00;
     /* Insert your solution below */
 	state = start;
  	while (1) {	
