@@ -54,19 +54,6 @@ continue 2
 expectPORTB 0x01
 checkResult
 
-test"Locked after unlock"
-set state = A1R
-setPINA 0x03
-continue 2
-setPINA 0x00
-continue 2
-setPINA 0x02
-continue 2
-setPINA 0x00
-continue 2
-expectPORTB 0x00
-checkResult
-
 test "Lock at beginning"
 set state = start
 setPINA 0x80
