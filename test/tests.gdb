@@ -54,19 +54,6 @@ continue 2
 expectPORTB 0x01
 checkResult
 
-test"Locked after unlock"
-set state = A1R
-setPINA 0x03
-continue 2
-setPINA 0x00
-continue 2
-setPINA 0x02
-continue 2
-setPINA 0x00
-continue 2
-expectPORTB 0x00
-checkResult
-
 test "Lock at beginning"
 set state = start
 setPINA 0x80
@@ -76,7 +63,23 @@ continue 2
 expectPORTB 0x00
 checkResult
 
+test "(Lock) => PINA: 0x80 => PORTB: 0x00"
+set state = lock
+setPINA 0x80
+continue 2
+expectPORTB 0x00
+checkResult
 
+test "PINA: 0x04, 0x00, 0x01 => PORTB: 0x00"
+set state = start
+setPINA 0x04
+continue 2
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+expectPORTB 0x00
+checkResult
 # Report on how many tests passed/testso ran
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests

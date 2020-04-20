@@ -10,7 +10,7 @@
 #include <avr/io.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
-enum States{start,init ,  A2P, A2R, WP, A1P, A1R, A2P2, A2R2, A1P2, lock}state;
+enum States{start,init ,  A2P, A2R, WP, A1P, A1R, lock}state;
 #endif
 
 
@@ -82,38 +82,8 @@ void tick(){
 			break;
 
 		case A1R:
-			if(PINA == 0x03){
-				state = A2P2;
-			}
-			else{
-				state = A1R;
-			}
+			state = init;
 			break;
-		case A2P2:
-			if(PINA == 0x00){
-				state = A2R2;
-			}
-			else{
-				state = A2P2;
-			}
-			break;
-
-		case A2R2:
-			if(PINA == 0x02){
-				state = A1P2;
-			}
-			else{
-				state = A2R2;
-			}
-			break;
-
-		case A1P2:
-			if(PINA == 0x00){
-				state = lock;
-			}
-			else{
-				state = A1P2;
-			}
 
 		default:
 			break;
@@ -143,13 +113,6 @@ void tick(){
 			break;
 		case A1R:
 			break;
-		case A2P2:
-			break;
-		case A2R2:
-			break;
-		case A1P2:
-			break;
-
 	}
 
 }
