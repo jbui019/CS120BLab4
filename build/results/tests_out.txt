@@ -3,5 +3,5 @@ Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"Unlock unsuccesfully"..."Unlock succesfully"..."Lock at beginning"..."(Lock) => PINA: 0x80 => PORTB: 0x00"..."PINA: 0x04, 0x00, 0x01 => PORTB: 0x00"...======================================================
+"Unlock unsuccesfully"..."Unlock succesfully"..."Lock => PINA: 0x08 => PORTB: 0x00"..."PINA: 0x04, 0x00, 0x01 =>PORTB: 0x000"...======================================================
 Quitting: Remote doesn't know how to detach
